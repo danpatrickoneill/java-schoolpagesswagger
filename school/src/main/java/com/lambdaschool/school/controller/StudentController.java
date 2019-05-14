@@ -28,7 +28,7 @@ public class StudentController
 
     // Please note there is no way to add students to course yet!
 
-    @ApiOperation(value = "returns all students", response = Student.class, responseContainer = "List")
+    @ApiOperation(value = "Returns all students", response = Student.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page to retrieve (0..N)"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page"),
@@ -43,6 +43,7 @@ public class StudentController
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Returns student based on provided ID number", response = Student.class)
     @GetMapping(value = "/Student/{StudentId}",
             produces = {"application/json"})
     public ResponseEntity<?> getStudentById(
@@ -54,6 +55,7 @@ public class StudentController
     }
 
 
+    @ApiOperation(value = "Returns all students whose names contain the provided string", response = Student.class, responseContainer = "List")
     @GetMapping(value = "/student/namelike/{name}",
             produces = {"application/json"})
     public ResponseEntity<?> getStudentByNameContaining(
@@ -63,7 +65,7 @@ public class StudentController
         return new ResponseEntity<>(myStudents, HttpStatus.OK);
     }
 
-
+    @ApiOperation(value = "Adds new student to database", notes = "ID for new student will be sent in response headers", response = void.class)
     @PostMapping(value = "/Student",
             consumes = {"application/json"},
             produces = {"application/json"})
@@ -81,7 +83,7 @@ public class StudentController
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
-
+    @ApiOperation(value = "Updates existing student with provided ID with provided information", response = void.class)
     @PutMapping(value = "/Student/{Studentid}")
     public ResponseEntity<?> updateStudent(
             @RequestBody
@@ -93,7 +95,7 @@ public class StudentController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
+    @ApiOperation(value = "Deletes student with provided ID", response = void.class)
     @DeleteMapping("/Student/{Studentid}")
     public ResponseEntity<?> deleteStudentById(
             @PathVariable
